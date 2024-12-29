@@ -13,6 +13,8 @@ export default class BoardPresenter {
   eventListComponent = new EventListView();
   eventItemComponent = new EventItemView();
 
+  componentsList = [new EventEditView(), new EventAddView(), new EventView(), new EventView(), new EventView()];
+
   constructor({boardContainer}) {
     this.boardContainer = boardContainer;
   }
@@ -24,15 +26,11 @@ export default class BoardPresenter {
     render(this.boardComponent, this.boardContainer);
     render(new SortView(), this.boardComponent.getElement());
     render(this.eventListComponent, this.boardComponent.getElement());
-    render(this.eventItemComponent, this.eventListComponent.getElement());
-    render(new EventEditView(), this.eventItemComponent.getElement());
-    render(this.eventItemComponent, this.eventListComponent.getElement());
-    render(new EventAddView(), this.eventItemComponent.getElement());
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
       const eventItem = new EventItemView();
       render(eventItem, this.eventListComponent.getElement());
-      render (new EventView(), eventItem.getElement());
+      render (this.componentsList[i], eventItem.getElement());
     }
   }
 }

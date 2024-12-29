@@ -7,11 +7,7 @@ const filtersElement = pageHeaderElement.querySelector('.trip-controls__filters'
 const pageMainElement = document.querySelector('.page-main');
 const pageBodyContainerElement = pageMainElement.querySelector('.page-body__container');
 
-
 const boardPresenter = new BoardPresenter({boardContainer: pageBodyContainerElement});
 
-
 render(new FilterView, filtersElement);
-
-
 boardPresenter.init();

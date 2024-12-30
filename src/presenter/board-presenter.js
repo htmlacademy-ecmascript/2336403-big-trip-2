@@ -1,6 +1,5 @@
 import { render } from '../render.js';
 import EventListView from '../view/event-list-view.js';
-import EventEditView from '../view/event-edit-view.js';
 import EventAddView from '../view/event-add-view.js';
 import EventItemView from '../view/event-item-view.js';
 import EventView from '../view/event-view.js';

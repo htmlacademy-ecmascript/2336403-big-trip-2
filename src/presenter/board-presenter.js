@@ -11,15 +11,14 @@ import SortView from '../view/sort-view.js';
 export default class BoardPresenter {
   boardComponent = new BoardView();
   eventListComponent = new EventListView();
-  eventItemComponent = new EventItemView();
-
-  componentsList = [new EventEditView(), new EventAddView(), new EventView(), new EventView(), new EventView()];
+  componentsList = [new EventAddView(), new EventView(), new EventView(), new EventView()];
 
   constructor({boardContainer}) {
     this.boardContainer = boardContainer;
   }
 
   init () {
+    this.boardContainer.innerHTML = '';
     while (this.boardContainer.firstChild) {
       this.boardContainer.removeChild(this.boardContainer.firstChild);
     }
@@ -27,7 +26,7 @@ export default class BoardPresenter {
     render(new SortView(), this.boardComponent.getElement());
     render(this.eventListComponent, this.boardComponent.getElement());
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < this.componentsList.length; i++) {
       const eventItem = new EventItemView();
       render(eventItem, this.eventListComponent.getElement());
       render (this.componentsList[i], eventItem.getElement());

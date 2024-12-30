@@ -18,9 +18,6 @@ export default class BoardPresenter {
 
   init () {
     this.boardContainer.innerHTML = '';
-    while (this.boardContainer.firstChild) {
-      this.boardContainer.removeChild(this.boardContainer.firstChild);
-    }
     render(this.boardComponent, this.boardContainer);
     render(new SortView(), this.boardComponent.getElement());
     render(this.eventListComponent, this.boardComponent.getElement());

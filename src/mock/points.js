@@ -1,7 +1,6 @@
 import { getRandomArrayEl, getRandomRange, getRandomDate } from '../utils.js';
 import { POINTS_TYPES } from '../const.js';
 import { getOffersKeyValueByType } from './offers.js';
-import { getDestKeyValueById } from './destinations.js';
 
 const mockPoints = [
   {
@@ -45,18 +44,41 @@ const mockPoints = [
     basePrice: getRandomRange(10, 10000),
     dateFrom: getRandomDate(new Date(2024, 0, 1), new Date(2024, 0, 2)),
     dateTo: getRandomDate(new Date(2024, 0, 3), new Date(2024, 0, 4)),
-    destination: '00000000-0000-0000-0000-dest00000002',
+    destination: '00000000-0000-0000-0000-dest00000003',
     isFavorite: !!getRandomRange(0,1),
     offers: [
       getOffersKeyValueByType(POINTS_TYPES[7], 'id')
     ],
     type: POINTS_TYPES[7] //'sightseeing'
+  },
+  {
+    id: '00000000-0000-0000-0000-point0000004',
+    basePrice: getRandomRange(10, 10000),
+    dateFrom: getRandomDate(new Date(2024, 0, 1), new Date(2024, 0, 2)),
+    dateTo: getRandomDate(new Date(2024, 0, 3), new Date(2024, 0, 4)),
+    destination: '00000000-0000-0000-0000-dest00000004',
+    isFavorite: !!getRandomRange(0,1),
+    offers: [
+      getOffersKeyValueByType(POINTS_TYPES[3], 'id')
+    ],
+    type: POINTS_TYPES[3] //'sightseeing'
+  },
+  {
+    id: '00000000-0000-0000-0000-point0000005',
+    basePrice: getRandomRange(10, 10000),
+    dateFrom: getRandomDate(new Date(2024, 0, 1), new Date(2024, 0, 2)),
+    dateTo: getRandomDate(new Date(2024, 0, 3), new Date(2024, 0, 4)),
+    destination: '00000000-0000-0000-0000-dest00000005',
+    isFavorite: !!getRandomRange(0,1),
+    offers: [
+      getOffersKeyValueByType(POINTS_TYPES[2], 'id')
+    ],
+    type: POINTS_TYPES[2] //' 'drive'
   }
 ];
 
 function getRandomPoint() {
-  //return getRandomArrayEl(mockPoints);
-  return mockPoints[3];
+  return getRandomArrayEl(mockPoints);
 }
 
 export { getRandomPoint };

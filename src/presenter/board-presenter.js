@@ -12,8 +12,9 @@ export default class BoardPresenter {
   eventListComponent = new EventListView();
   componentsList = [new EventAddView(), new EventView(), new EventView(), new EventView()];
 
-  constructor({boardContainer}) {
+  constructor({boardContainer, pointsModel}) {
     this.boardContainer = boardContainer;
+    this.pointsModel = pointsModel;
   }
 
   init () {

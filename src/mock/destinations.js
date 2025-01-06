@@ -84,18 +84,54 @@ const mockDestArray = [
     id: '00000000-0000-0000-0000-dest00000005',
     description: 'Lobnya - for those who value comfort and coziness',
     name: 'Lobnya',
+    pictures: []
+  },
+  {
+    id: '00000000-0000-0000-0000-dest00000005',
+    description: 'Irkutsk Irkutsk Irkutsk Irkutsk Irkutsk Irkutsk Irkutsk',
+    name: 'Irkutsk',
     pictures: [
       {
-        src: 'https://22.objects.htmlacademy.pro/static/destinations/19.jpg',
-        description: 'Lobnya for those who value comfort and coziness'
+        src: 'https://22.objects.htmlacademy.pro/static/destinations/21.jpg',
+        description: 'Irkutsk for those who value comfort and coziness'
+      }
+    ]
+  },
+  {
+    id: '00000000-0000-0000-0000-dest00000006',
+    description: 'Lebedyan - Lebedyan Lebedyan Lebedyan Lebedyan Lebedyan and Lebedyan',
+    name: 'Lebedyan',
+    pictures: [
+      {
+        src: 'https://22.objects.htmlacademy.pro/static/destinations/31.jpg',
+        description: 'Lebedyan for those who value comfort and coziness'
       },
       {
-        src: 'https://22.objects.htmlacademy.pro/static/destinations/8.jpg',
-        description: 'Lobnya a perfect place to stay with a family'
+        src: 'https://22.objects.htmlacademy.pro/static/destinations/32.jpg',
+        description: 'Lebedyan a perfect place to stay with a family'
       },
       {
-        src: 'https://22.objects.htmlacademy.pro/static/destinations/15.jpg',
-        description: 'Lobnya with an embankment of a mighty river as a centre of attraction'
+        src: 'https://22.objects.htmlacademy.pro/static/destinations/33.jpg',
+        description: 'Lebedyan with an embankment of a mighty river as a centre of attraction'
+      }
+    ]
+  },
+  {
+    id: '00000000-0000-0000-0000-dest00000007',
+    description: 'Khimki - Khimki Khimki Khimki Khimki Khimki y Khimki',
+    name: 'Khimki',
+    pictures: [
+      {
+        src: 'https://22.objects.htmlacademy.pro/static/destinations/11.jpg',
+        description: 'Khimki for those who value comfort and coziness'
+      },
+      {
+        src: 'https://22.objects.htmlacademy.pro/static/destinations/12.jpg',
+        description: 'Khimki a perfect place to stay with a family'
+      },
+      {
+        src: 'https://22.objects.htmlacademy.pro/static/destinations/13.jpg',
+        description: 'Khimki with an embankment of a mighty river as a centre of attraction'
       }
     ]
   }
@@ -103,7 +139,6 @@ const mockDestArray = [
 
 function getDestKeyValueById(id, key) {
   return mockDestArray[mockDestArray.findIndex((o) => o.id === id)][key];
-  //return Array.map((item) => item[key]);
 }
 
 export { getDestKeyValueById };

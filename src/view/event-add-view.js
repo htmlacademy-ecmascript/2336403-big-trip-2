@@ -1,6 +1,16 @@
 import {createElement} from '../render.js';
+import { humanizePointDate } from '../utils.js';
+import { FormatDate } from '../const.js';
 
-function createEventAddTemplate() {
+function createEventAddTemplate(event) {
+
+  const { type, destination, basePrice, isFavorite, dateFrom, dateTo } = event;
+  const datetime = humanizePointDate(dateFrom, FormatDate.DATE_TIME);
+  const eventDate = humanizePointDate(dateFrom, FormatDate.DATE_EVENT);
+  const eventStart = humanizePointDate(dateFrom, FormatDate.DATE_SCHEDULE);
+  const eventEnd = humanizePointDate(dateTo, FormatDate.DATE_SCHEDULE);
+  const favoriteClassName = isFavorite ? 'event__favorite-btn--active' : '';
+
   return (
     `<form class="event event--edit" action="#" method="post">
       <header class="event__header">
@@ -145,8 +155,12 @@ function createEventAddTemplate() {
 }
 
 export default class EventAddView {
+  constructor (event) {
+    this.event = event;
+  }
+  
   getTemplate() {
-    return createEventAddTemplate();
+    return createEventAddTemplate(this.event);
   }
 
   getElement() {

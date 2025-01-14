@@ -18,5 +18,3 @@ const boardPresenter = new BoardPresenter({
 
 render(new FilterView, filtersElement);
 boardPresenter.init();
-
-window.console.log(pointsModel);

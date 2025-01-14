@@ -2,6 +2,7 @@ import { getRandomArrayEl, getRandomRange, getRandomDate } from '../utils.js';
 import { POINTS_TYPES } from '../const.js';
 import { getOffersKeyValueByType } from './offers.js';
 
+
 const mockPoints = [
   {
     id: '00000000-0000-0000-0000-point0000000', //f4b62099-293f-4c3d-a702-94eec4a2808c

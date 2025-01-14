@@ -2,7 +2,6 @@ import PointsModel from './model/point-model.js';
 import FilterView from './view/filter-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import { render } from './render.js';
-//import { getRandomPoint } from './mock/points.js';
 
 
 const pageHeaderElement = document.querySelector('.page-header');

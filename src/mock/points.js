@@ -1,6 +1,6 @@
 import { getRandomArrayEl, getRandomRange, getRandomDate } from '../utils.js';
 import { POINTS_TYPES } from '../const.js';
-import { getOffersKeyValueByType } from './offers.js';
+import { getOffersKeyValueByType, getOffersByType } from './offers.js';
 
 
 const mockPoints = [
@@ -11,9 +11,7 @@ const mockPoints = [
     dateTo: getRandomDate(new Date(2024, 0, 3), new Date(2024, 11, 4)),
     destination: '00000000-0000-0000-0000-dest00000000', //bfa5cb75-a1fe-4b77-a83c-0e528e910e04
     isFavorite: !!getRandomRange(0,1),
-    offers: [
-      getOffersKeyValueByType(POINTS_TYPES[0], 'id')
-    ],
+    offers: getRandomOffersList(getOffersByType(POINTS_TYPES[0])),
     type: POINTS_TYPES[0] // 'taxi'
   },
   {
@@ -23,9 +21,7 @@ const mockPoints = [
     dateTo: getRandomDate(new Date(2024, 0, 3), new Date(2024, 11, 4)),
     destination: '00000000-0000-0000-0000-dest00000001',
     isFavorite: !!getRandomRange(0,1),
-    offers: [
-      getOffersKeyValueByType(POINTS_TYPES[1], 'id')
-    ],
+    offers: getRandomOffersList(getOffersByType(POINTS_TYPES[1])),
     type: POINTS_TYPES[1] // 'bus'
   },
   {
@@ -35,9 +31,7 @@ const mockPoints = [
     dateTo: getRandomDate(new Date(2024, 0, 3), new Date(2024, 11, 4)),
     destination: '00000000-0000-0000-0000-dest00000002',
     isFavorite: !!getRandomRange(0,1),
-    offers: [
-      getOffersKeyValueByType(POINTS_TYPES[4], 'id')
-    ],
+    offers: getRandomOffersList(getOffersByType(POINTS_TYPES[4])),
     type: POINTS_TYPES[4] //'ship'
   },
   {
@@ -47,9 +41,7 @@ const mockPoints = [
     dateTo: getRandomDate(new Date(2024, 0, 3), new Date(2024, 11, 4)),
     destination: '00000000-0000-0000-0000-dest00000003',
     isFavorite: !!getRandomRange(0,1),
-    offers: [
-      getOffersKeyValueByType(POINTS_TYPES[7], 'id')
-    ],
+    offers: getRandomOffersList(getOffersByType(POINTS_TYPES[7])),
     type: POINTS_TYPES[7] //'sightseeing'
   },
   {
@@ -59,9 +51,7 @@ const mockPoints = [
     dateTo: getRandomDate(new Date(2024, 0, 3), new Date(2024, 11, 4)),
     destination: '00000000-0000-0000-0000-dest00000004',
     isFavorite: !!getRandomRange(0,1),
-    offers: [
-      getOffersKeyValueByType(POINTS_TYPES[3], 'id')
-    ],
+    offers: getRandomOffersList(getOffersByType(POINTS_TYPES[3])),
     type: POINTS_TYPES[3] //'sightseeing'
   },
   {
@@ -71,9 +61,7 @@ const mockPoints = [
     dateTo: getRandomDate(new Date(2024, 0, 3), new Date(2024, 11, 4)),
     destination: '00000000-0000-0000-0000-dest00000005',
     isFavorite: !!getRandomRange(0,1),
-    offers: [
-      getOffersKeyValueByType(POINTS_TYPES[2], 'id')
-    ],
+    offers: getRandomOffersList(getOffersByType(POINTS_TYPES[2])),
     type: POINTS_TYPES[2] //' 'drive'
   }
 ];
@@ -81,5 +69,18 @@ const mockPoints = [
 function getRandomPoint() {
   return getRandomArrayEl(mockPoints);
 }
+
+function getRandomOffersList(arr) {
+  const n = getRandomRange (0, arr.length);
+    let w = arr.length, t, i;
+    // Применяем алгоритм Фишера – Йетса
+    while (w) {
+      i = Math.floor(Math.random() * w--);
+      t = arr[w];
+      arr[w] = arr[i];
+      arr[i] = t;
+    }
+    return arr.slice(0, n);
+  }
 
 export { getRandomPoint };

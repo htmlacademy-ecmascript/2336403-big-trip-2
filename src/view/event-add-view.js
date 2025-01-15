@@ -4,7 +4,6 @@ import { FormatDate } from '../const.js';
 
 function createEventAddTemplate(event) {
 
-  const { type, destination, basePrice, isFavorite, dateFrom, dateTo } = event;
   const datetime = humanizePointDate(dateFrom, FormatDate.DATE_TIME);
   const eventDate = humanizePointDate(dateFrom, FormatDate.DATE_EVENT);
   const eventStart = humanizePointDate(dateFrom, FormatDate.DATE_SCHEDULE);

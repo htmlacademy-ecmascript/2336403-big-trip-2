@@ -5,5 +5,4 @@ const getRandomRange = (min, max) => Math.floor(Math.random() * (max - min + 1))
 const getRandomDate = (start, end) => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 const humanizePointDate = (date, formatDate) => date ? dayjs(date).format(formatDate) : '';
 
-
 export { getRandomArrayEl, getRandomRange, getRandomDate, humanizePointDate };

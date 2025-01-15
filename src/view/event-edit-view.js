@@ -1,13 +1,36 @@
 import {createElement} from '../render.js';
+import { humanizePointDate } from '../utils.js';
+import { FormatDate } from '../const.js';
+import { getDestKeyValueById } from '../mock/destinations.js';
 
-function createEventEditTemplate() {
+function createOfferTemplate(offer) {
+  window.console.log(offer.title, ', ', offer.price);
+  return (
+    `<li class="event__offer">
+          <span class="event__offer-title">${offer.title}</span>
+          &plus;&euro;&nbsp;
+          <span class="event__offer-price">${offer.price}</span>
+    </li>`
+  );
+}
+
+function createEventEditTemplate(event) {
+
+  const { id, basePrice, dateFrom, dateTo, destination, isFavorite, offers, type } = event;
+  
+  const datetime = humanizePointDate(dateFrom, FormatDate.DATE_TIME);
+  const eventDate = humanizePointDate(dateFrom, FormatDate.DATE_EVENT);
+  const eventStart = humanizePointDate(dateFrom, FormatDate.DATE_SCHEDULE);
+  const eventEnd = humanizePointDate(dateTo, FormatDate.DATE_SCHEDULE);
+  const favoriteClassName = isFavorite ? 'event__favorite-btn--active' : '';
+
   return (
     `<form class="event event--edit" action="#" method="post">
       <header class="event__header">
         <div class="event__type-wrapper">
           <label class="event__type  event__type-btn" for="event-type-toggle-1">
             <span class="visually-hidden">Choose event type</span>
-            <img class="event__type-icon" width="17" height="17" src="img/icons/flight.png" alt="Event type icon">
+            <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
           </label>
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 

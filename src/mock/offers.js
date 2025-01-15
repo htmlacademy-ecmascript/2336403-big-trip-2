@@ -205,4 +205,8 @@ function getOffersKeyValueByType(type, key) {
   return offersArray.map((item) => item[key]);
 }
 
-export { getOffersKeyValueByType };
+function getOffersByType(type) {
+  return mockOffers[mockOffers.findIndex((o) => o.type === type)].offers;
+}
+
+export { getOffersKeyValueByType, getOffersByType };

@@ -4,9 +4,21 @@ import { humanizePointDate } from '../utils.js';
 import { FormatDate } from '../const.js';
 import { getDestKeyValueById } from '../mock/destinations.js';
 
+function createOfferTemplate(offer) {
+  window.console.log(offer.title, ', ', offer.price);
+  return (
+    `<li class="event__offer">
+          <span class="event__offer-title">${offer.title}</span>
+          &plus;&euro;&nbsp;
+          <span class="event__offer-price">${offer.price}</span>
+    </li>`
+  );
+}
+
 function createEventTemplate(event) {
 
-  const { type, destination, basePrice, isFavorite, dateFrom, dateTo } = event;
+  const { id, basePrice, dateFrom, dateTo, destination, isFavorite, offers, type } = event;
+  
   const datetime = humanizePointDate(dateFrom, FormatDate.DATE_TIME);
   const eventDate = humanizePointDate(dateFrom, FormatDate.DATE_EVENT);
   const eventStart = humanizePointDate(dateFrom, FormatDate.DATE_SCHEDULE);
@@ -33,11 +45,7 @@ function createEventTemplate(event) {
       </p>
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
-        <li class="event__offer">
-          <span class="event__offer-title">Order Uber</span>
-          &plus;&euro;&nbsp;
-          <span class="event__offer-price">20</span>
-        </li>
+        ${offers.map((offer) => createOfferTemplate(offer)).join('')}
       </ul>
       <button class="event__favorite-btn ${favoriteClassName}" type="button">
         <span class="visually-hidden">Add to favorite</span>

@@ -5,7 +5,6 @@ import { FormatDate } from '../const.js';
 import { getDestKeyValueById } from '../mock/destinations.js';
 
 function createOfferTemplate(offer) {
-  window.console.log(offer.title, ', ', offer.price);
   return (
     `<li class="event__offer">
           <span class="event__offer-title">${offer.title}</span>

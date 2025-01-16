@@ -3,16 +3,103 @@ import { humanizePointDate } from '../utils.js';
 import { FormatDate } from '../const.js';
 import { getDestKeyValueById } from '../mock/destinations.js';
 
-function createOfferTemplate(offer) {
-  window.console.log(offer.title, ', ', offer.price);
-  return (
-    `<li class="event__offer">
-          <span class="event__offer-title">${offer.title}</span>
-          &plus;&euro;&nbsp;
-          <span class="event__offer-price">${offer.price}</span>
-    </li>`
-  );
-}
+
+const createEventItemTemplate = (types, checkedType) =>
+  types.map((type) => `
+    <div class="event__type-item">
+      <input id="event-type-${type}-1" class="event__type-input  visually-hidden"  type="radio" name="event-type" value="${type}" ${checkedType === type ? 'checked' : ''}>
+      <label class="event__type-label  event__type-label--${type}"  for="event-type-${type}-1">${type}</label>
+    </div>`)
+    .join('');
+
+const createDestinationItemTemplate = (destinations) =>
+  destinations.map(({name}) => `
+    <option value="${name}"></option>`)
+    .join('');
+
+// const createOfferItemTemplate = (offers, addedOffers, type) =>
+//   offers.offers.map(({id, title, price}) => {
+//     const isChecked = addedOffers.map((addedOffer) => addedOffer.id)
+//       .includes(id) ? 'checked' : '';
+
+//     return 
+//     `
+//       <div class="event__offer-selector">
+//         <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}" type="checkbox" name="event-offer-${type}-${id}"  ${isChecked} />
+//         <label class="event__offer-label" for="event-offer-${id}">
+//           <span class="event__offer-title">${title} ${id}</span>
+//           &plus;&euro;&nbsp;
+//           <span class="event__offer-price">${price}</span>
+//         </label>
+//       </div>`;
+//   }).join('');
+
+// const createOffersContainerTemplate = (offers, addedOffers, type) => {
+//   if (!offers.offers.length) {
+//     return '';
+//   }
+
+//   return `
+//     <section class="event__section  event__section--offers">
+//       <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+//       <div class="event__available-offers">
+//         ${createOfferItemTemplate(offers, addedOffers, type)}
+//       </div>
+//     </section>`;
+// };
+
+// const createDescriptionItemTemplate = (description, name) => {
+//   if (!description) {
+//     return '';
+//   }
+
+//   return `
+//     <h3 class="event__section-title  event__section-title--destination">${name}</h3>
+//     <p class="event__destination-description">${description}</p>`;
+// };
+
+// const createImageItemTemplate = (images) => {
+//   if (!images.length) {
+//     return '';
+//   }
+
+//   return`
+//   <div class="event__photos-container">
+//     <div class="event__photos-tape">
+//       ${images.map(({src}) =>`
+//       <img class="event__photo" src="${src}" alt="Event photo">`)
+//     .join('')}
+//     </div>
+//   </div>`;
+// };
+
+// const createDestinationContainerTemplate = (description, name, pictures) => {
+//   if (!description && !pictures.length) {
+//     return '';
+//   }
+
+//   return `
+//     <section class="event__section  event__section--destination">
+//       ${createDescriptionItemTemplate(description, name)}
+//       ${createImageItemTemplate(pictures)}
+//     </section>`;
+// };
+
+// const createRollupButtonTemplate = (id) => {
+//   if (id === DEFAULT_POINT_ID) {
+//     return '';
+//   }
+
+//   return `
+//     <button class="event__rollup-btn" type="button">
+//       <span class="visually-hidden">Open event</span>
+//     </button>`;
+// };
+
+// const getResetButtonText = (id) =>
+//   id === DEFAULT_POINT_ID
+//     ? NEW_POINT_BUTTON_TEXT
+//     : EDIT_POINT_BUTTON_TEXT;
 
 function createEventEditTemplate(event) {
 
@@ -182,8 +269,11 @@ function createEventEditTemplate(event) {
 }
 
 export default class EventEditView {
+    constructor (event) {
+      this.event = event;
+    }
   getTemplate() {
-    return createEventEditTemplate();
+    return createEventEditTemplate(this.event);
   }
 
   getElement() {

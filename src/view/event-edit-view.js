@@ -62,34 +62,36 @@ function createGroupTime(dateFrom, dateTo, id) {
   );
 }
 
-function createOfferItemTemplate (offers, type, id) {
-  window.console.log(offers);
-  getOffersByType(type).map(({id, title, price}) => {
-   const isChecked = offers.map((id) => offers.id).includes(id) ? 'checked' : '';
-   window.console.log(isChecked)});
+// const isChecked = offers.map((id) => offers.id).includes(id) ? 'checked' : '';
+  // window.console.log(isChecked)});
   // offers.map(({id, title, price}) => {
   //   const isChecked = addedOffers.map((addedOffer) => addedOffer.id).includes(id) ? 'checked' : '';
-    return (`
+
+function createOfferItemTemplate (aviableOffer, offers, type) {
+    const {id, title, price} = aviableOffer; 
+    window.console.log(aviableOffer.id);
+    const isChecked = offers.map((offer) => offer.id).includes(aviableOffer.id) ? 'checked' : '';
+    return `
       <div class="event__offer-selector">
-        <input class="event__offer-checkbox  visually-hidden" id="event-offer-${'id'}" type="checkbox" name="event-offer-${type}-${id}"  ${'isChecked'} />
-        <label class="event__offer-label" for="event-offer-${'id'}">
-          <span class="event__offer-title">${'title'} ${'id'}</span>
+        <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}" type="checkbox" name="event-offer-${type}-${id}"  ${isChecked} />
+        <label class="event__offer-label" for="event-offer-${id}">
+          <span class="event__offer-title">${title}</span>
           &plus;&euro;&nbsp;
-          <span class="event__offer-price">${'price'}</span>
+          <span class="event__offer-price">${price}</span>
         </label>
-      </div>`);
-  }
-  // .join('')};
+      </div>`;
+};
 
 function createOffersContainerTemplate(offers, type) {
-  if (!offers.length) {
+  const allAviableOffers = getOffersByType(type);
+  if (!allAviableOffers.length) {
     return '';
   }
   return (
   `<section class="event__section  event__section--offers">
       <h3 class="event__section-title  event__section-title--offers">Offers</h3>
       <div class="event__available-offers">
-        ${createOfferItemTemplate(offers, type)}
+        ${allAviableOffers.map((aviableOffer) => createOfferItemTemplate(aviableOffer, offers, type)).join('')}
       </div>
     </section>`);
 };
@@ -150,8 +152,7 @@ function createEventEditTemplate(event) {
         </button>
       </header>
       <section class="event__details">
-      ${createOffersContainerTemplate(offers, type)}
-        
+        ${createOffersContainerTemplate(offers, type)} 
       </section>
     </form>`
   );

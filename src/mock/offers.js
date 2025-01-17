@@ -19,7 +19,7 @@ const mockOffers = [
       },
       {
         id: '00000000-0000-0000-0000-offer0000003',
-        title: 'Drive me, bitch',
+        title: 'Drive me, driver',
         price: 12000
       },
       {

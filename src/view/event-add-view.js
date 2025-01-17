@@ -1,13 +1,13 @@
 import { createElement } from '../render.js';
 import { humanizePointDate, formatString } from '../utils.js';
-import { FormatDate,  POINTS_TYPES } from '../const.js';
+import { FormatDate,POINTS_TYPES } from '../const.js';
 import { getDestKeyValueById, getDestNameList } from '../mock/destinations.js';
 import { getOffersByType } from '../mock/offers.js';
 
 
 function createPointTypeItemTemplate(type, id) {
   return (
-  `<div class="event__type-item">
+    `<div class="event__type-item">
     <input 
       id="event-type-${type}-${id}" 
       class="event__type-input  visually-hidden" 
@@ -27,7 +27,7 @@ function createPointTypeItemTemplate(type, id) {
 function createDestinationListTemplate(name) {
   return (
     `<option value="${name}"></option>`
-  )
+  );
 }
 
 function createGroupTime(dateFrom, dateTo, id) {
@@ -63,18 +63,18 @@ function createGroupTime(dateFrom, dateTo, id) {
 }
 
 function createOfferItemTemplate (aviableOffer, offers) {
-    const {id, title, price} = aviableOffer; 
-    const isChecked = offers.map((offer) => offer.id).includes(aviableOffer.id) ? 'checked' : '';
-    return `
-      <div class="event__offer-selector">
-        <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}" type="checkbox" name="${id}"  ${isChecked} />
-        <label class="event__offer-label" for="event-offer-${id}">
-          <span class="event__offer-title">${title}</span>
-          &plus;&euro;&nbsp;
-          <span class="event__offer-price">${price}</span>
-        </label>
-      </div>`;
-};
+  const {id, title, price} = aviableOffer;
+  const isChecked = offers.map((offer) => offer.id).includes(aviableOffer.id) ? 'checked' : '';
+  return `
+    <div class="event__offer-selector">
+      <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}" type="checkbox" name="${id}"  ${isChecked} />
+      <label class="event__offer-label" for="event-offer-${id}">
+        <span class="event__offer-title">${title}</span>
+        &plus;&euro;&nbsp;
+        <span class="event__offer-price">${price}</span>
+      </label>
+    </div>`;
+}
 
 function createOffersContainerTemplate(offers, type) {
   const allAviableOffers = getOffersByType(type);
@@ -82,13 +82,13 @@ function createOffersContainerTemplate(offers, type) {
     return '';
   }
   return (
-  `<section class="event__section  event__section--offers">
+    `<section class="event__section  event__section--offers">
       <h3 class="event__section-title  event__section-title--offers">Offers</h3>
       <div class="event__available-offers">
         ${allAviableOffers.map((aviableOffer) => createOfferItemTemplate(aviableOffer, offers)).join('')}
       </div>
     </section>`);
-};
+}
 
 function createDescriptionItemTemplate(description, name) {
   if (!description) {
@@ -97,7 +97,7 @@ function createDescriptionItemTemplate(description, name) {
   return `
     <h3 class="event__section-title  event__section-title--destination">${name}</h3>
     <p class="event__destination-description">${description}</p>`;
-};
+}
 
 function createImageItemTemplate(pictures) {
   if (!pictures.length) {
@@ -111,7 +111,7 @@ function createImageItemTemplate(pictures) {
     .join('')}
     </div>
   </div>`;
-};
+}
 
 function createDestinationContainerTemplate (destination) {
   const description = getDestKeyValueById(destination, 'description');
@@ -126,17 +126,12 @@ function createDestinationContainerTemplate (destination) {
       ${createDescriptionItemTemplate(description, name)}
       ${createImageItemTemplate(pictures)}
     </section>`;
-};
+}
 
 function createEventEditTemplate(event) {
 
-  const { id, basePrice, dateFrom, dateTo, destination, isFavorite, offers, type } = event;
-  
-  const datetime = humanizePointDate(dateFrom, FormatDate.DATE_TIME);
-  const eventDate = humanizePointDate(dateFrom, FormatDate.DATE_EVENT);
-  const eventStart = humanizePointDate(dateFrom, FormatDate.DATE_SCHEDULE);
-  const eventEnd = humanizePointDate(dateTo, FormatDate.DATE_SCHEDULE);
-  const favoriteClassName = isFavorite ? 'event__favorite-btn--active' : '';
+  const { id, basePrice, dateFrom, dateTo, destination, offers, type } = event;
+
 
   return (
     `<form class="event event--edit" action="#" method="post">
@@ -160,7 +155,7 @@ function createEventEditTemplate(event) {
           </label>
           <input class="event__input  event__input--destination" id="event-destination-${id}" type="text" name="event-destination" value="${getDestKeyValueById(destination, 'name')}" list="destination-list-${id}">
           <datalist id="destination-list-${id}">
-            ${getDestNameList().map(name => createDestinationListTemplate(name)).join('')}
+            ${getDestNameList().map((name) => createDestinationListTemplate(name)).join('')}
           </datalist>
         </div>
         ${createGroupTime(dateFrom, dateTo, id)}
@@ -183,9 +178,10 @@ function createEventEditTemplate(event) {
 }
 
 export default class EventEditView {
-    constructor (event) {
-      this.event = event;
-    }
+  constructor (event) {
+    this.event = event;
+  }
+
   getTemplate() {
     return createEventEditTemplate(this.event);
   }

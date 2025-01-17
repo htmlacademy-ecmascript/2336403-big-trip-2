@@ -26,7 +26,6 @@ export default class BoardPresenter {
     render(new SortView(), this.boardComponent.getElement());
     render(this.eventListComponent, this.boardComponent.getElement());
     render(this.eventItem, this.eventListComponent.getElement());
-    
     render(this.eventItem, this.eventListComponent.getElement());
     render(new EventAddView(getDefaultPoint()), this.eventItem.getElement());
 

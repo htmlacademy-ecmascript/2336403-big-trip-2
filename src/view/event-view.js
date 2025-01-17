@@ -16,8 +16,7 @@ function createOfferTemplate(offer) {
 
 function createEventTemplate(event) {
 
-  const { id, basePrice, dateFrom, dateTo, destination, isFavorite, offers, type } = event;
-  
+  const { basePrice, dateFrom, dateTo, destination, isFavorite, offers, type } = event;
   const datetime = humanizePointDate(dateFrom, FormatDate.DATE_TIME);
   const eventDate = humanizePointDate(dateFrom, FormatDate.DATE_EVENT);
   const eventStart = humanizePointDate(dateFrom, FormatDate.DATE_SCHEDULE);
@@ -63,7 +62,7 @@ export default class EventView {
   constructor (event) {
     this.event = event;
   }
-  
+
   getTemplate() {
     return createEventTemplate(this.event);
   }

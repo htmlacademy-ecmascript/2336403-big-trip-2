@@ -26,6 +26,6 @@ const getDefaultPoint = () => ({
   isFavorite: false,
   offers: [],
   type: POINTS_TYPES[0],
-})
+});
 
 export { POINTS_TYPES, FormatDate, getDefaultPoint };

@@ -1,6 +1,6 @@
 import { getRandomArrayEl, getRandomRange, getRandomDate } from '../utils.js';
 import { POINTS_TYPES } from '../const.js';
-import { getOffersKeyValueByType, getOffersByType } from './offers.js';
+import { getOffersByType } from './offers.js';
 
 
 const mockPoints = [
@@ -72,15 +72,15 @@ function getRandomPoint() {
 
 function getRandomOffersList(arr) {
   const n = getRandomRange (0, arr.length);
-    let w = arr.length, t, i;
-    // Применяем алгоритм Фишера – Йетса
-    while (w) {
-      i = Math.floor(Math.random() * w--);
-      t = arr[w];
-      arr[w] = arr[i];
-      arr[i] = t;
-    }
-    return arr.slice(0, n);
+  let w = arr.length, t, i;
+  // Применяем алгоритм Фишера – Йетса
+  while (w) {
+    i = Math.floor(Math.random() * w--);
+    t = arr[w];
+    arr[w] = arr[i];
+    arr[i] = t;
   }
+  return arr.slice(0, n);
+}
 
 export { getRandomPoint };

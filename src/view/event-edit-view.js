@@ -64,7 +64,6 @@ function createGroupTime(dateFrom, dateTo, id) {
 
 function createOfferItemTemplate (aviableOffer, offers) {
     const {id, title, price} = aviableOffer; 
-    window.console.log(aviableOffer.id);
     const isChecked = offers.map((offer) => offer.id).includes(aviableOffer.id) ? 'checked' : '';
     return `
       <div class="event__offer-selector">
@@ -120,7 +119,6 @@ function createDestinationContainerTemplate (destination) {
   const description = getDestKeyValueById(destination, 'description');
   const pictures = getDestKeyValueById(destination, 'pictures');
   const name = getDestKeyValueById(destination, 'name');
-  window.console.log(description, pictures);
   if (!description && !pictures.length) {
     return '';
   }

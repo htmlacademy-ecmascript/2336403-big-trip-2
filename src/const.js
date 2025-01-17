@@ -17,4 +17,15 @@ const FormatDate = {
   DATE_SLASHED: 'YY/MM/DD'
 };
 
+const getDefaultPoint = () => ({
+  id: '00000000-0000-0000-0000-pointdefault0',
+  basePrice: 0,
+  dateFrom: new Date().toISOString(),
+  dateTo: new Date().toISOString(),
+  destination: 0,
+  isFavorite: false,
+  offers: [],
+  type: POINTS_TYPES[0],
+})
+
 export { POINTS_TYPES, FormatDate };

@@ -11,6 +11,8 @@ const pageBodyContainerElement = pageMainElement.querySelector('.page-body__cont
 
 
 const pointsModel = new PointsModel();
+pointsModel.init();
+
 const boardPresenter = new BoardPresenter({
   boardContainer: pageBodyContainerElement,
   pointsModel});

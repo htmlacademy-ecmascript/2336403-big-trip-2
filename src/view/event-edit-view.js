@@ -62,18 +62,13 @@ function createGroupTime(dateFrom, dateTo, id) {
   );
 }
 
-// const isChecked = offers.map((id) => offers.id).includes(id) ? 'checked' : '';
-  // window.console.log(isChecked)});
-  // offers.map(({id, title, price}) => {
-  //   const isChecked = addedOffers.map((addedOffer) => addedOffer.id).includes(id) ? 'checked' : '';
-
-function createOfferItemTemplate (aviableOffer, offers, type) {
+function createOfferItemTemplate (aviableOffer, offers) {
     const {id, title, price} = aviableOffer; 
     window.console.log(aviableOffer.id);
     const isChecked = offers.map((offer) => offer.id).includes(aviableOffer.id) ? 'checked' : '';
     return `
       <div class="event__offer-selector">
-        <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}" type="checkbox" name="event-offer-${type}-${id}"  ${isChecked} />
+        <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}" type="checkbox" name="${id}"  ${isChecked} />
         <label class="event__offer-label" for="event-offer-${id}">
           <span class="event__offer-title">${title}</span>
           &plus;&euro;&nbsp;
@@ -91,9 +86,50 @@ function createOffersContainerTemplate(offers, type) {
   `<section class="event__section  event__section--offers">
       <h3 class="event__section-title  event__section-title--offers">Offers</h3>
       <div class="event__available-offers">
-        ${allAviableOffers.map((aviableOffer) => createOfferItemTemplate(aviableOffer, offers, type)).join('')}
+        ${allAviableOffers.map((aviableOffer) => createOfferItemTemplate(aviableOffer, offers)).join('')}
       </div>
     </section>`);
+};
+
+function createDescriptionItemTemplate(description, name) {
+  if (!description) {
+    return '';
+  }
+
+  return `
+    <h3 class="event__section-title  event__section-title--destination">${name}</h3>
+    <p class="event__destination-description">${description}</p>`;
+};
+
+function createImageItemTemplate(pictures) {
+  if (!pictures.length) {
+    return '';
+  }
+
+  return`
+  <div class="event__photos-container">
+    <div class="event__photos-tape">
+      ${pictures.map(({src}) =>`
+      <img class="event__photo" src="${src}" alt="Event photo">`)
+    .join('')}
+    </div>
+  </div>`;
+};
+
+function createDestinationContainerTemplate (destination) {
+  const description = getDestKeyValueById(destination, 'description');
+  const pictures = getDestKeyValueById(destination, 'pictures');
+  const name = getDestKeyValueById(destination, 'name');
+  window.console.log(description, pictures);
+  if (!description && !pictures.length) {
+    return '';
+  }
+
+  return `
+    <section class="event__section  event__section--destination">
+      ${createDescriptionItemTemplate(description, name)}
+      ${createImageItemTemplate(pictures)}
+    </section>`;
 };
 
 function createEventEditTemplate(event) {
@@ -115,7 +151,6 @@ function createEventEditTemplate(event) {
             <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
           </label>
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-${id}" type="checkbox">
-
           <div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>        
@@ -123,7 +158,6 @@ function createEventEditTemplate(event) {
             </fieldset>
           </div>
         </div>
-
         <div class="event__field-group  event__field-group--destination">
           <label class="event__label  event__type-output" for="event-destination-${id}">
             ${type}
@@ -133,10 +167,7 @@ function createEventEditTemplate(event) {
             ${getDestNameList().map(name => createDestinationListTemplate(name)).join('')}
           </datalist>
         </div>
-
         ${createGroupTime(dateFrom, dateTo, id)}
-        
-
         <div class="event__field-group  event__field-group--price">
           <label class="event__label" for="event-price-${id}">
             <span class="visually-hidden">Price</span>
@@ -144,7 +175,6 @@ function createEventEditTemplate(event) {
           </label>
           <input class="event__input  event__input--price" id="event-price-${id}" type="text" name="event-price" value="${basePrice}">
         </div>
-
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
         <button class="event__reset-btn" type="reset">Delete</button>
         <button class="event__rollup-btn" type="button">
@@ -152,7 +182,8 @@ function createEventEditTemplate(event) {
         </button>
       </header>
       <section class="event__details">
-        ${createOffersContainerTemplate(offers, type)} 
+        ${createOffersContainerTemplate(offers, type)}
+        ${createDestinationContainerTemplate(destination)}
       </section>
     </form>`
   );

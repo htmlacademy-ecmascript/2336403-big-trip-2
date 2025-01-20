@@ -138,19 +138,20 @@ const mockDestArray = [
 ];
 
 function getDestKeyValueById(id, key) {
-  try {
+  // try {
+  //   return mockDestArray[mockDestArray.findIndex((o) => o.id === id)][key];
+  // } catch {
+  //   return [];
+  // }
+  if(id) {
     return mockDestArray[mockDestArray.findIndex((o) => o.id === id)][key];
-  } catch {
+  } else {
     return [];
   }
 }
 
 function getDestNameList() {
-  try {
-    return mockDestArray.map((item) => item['name']);
-  } catch {
-    return '[]';
-  }
+  return mockDestArray.map((item) => item['name']);
 }
 
 export { getDestKeyValueById, getDestNameList };

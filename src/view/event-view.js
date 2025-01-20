@@ -1,6 +1,6 @@
 
 import { createElement } from '../render.js';
-import { humanizePointDate } from '../utils.js';
+import { humanizePointDate, getTimeInterval } from '../utils.js';
 import { FormatDate } from '../const.js';
 import { getDestKeyValueById } from '../mock/destinations.js';
 
@@ -36,7 +36,7 @@ function createEventTemplate(event) {
           &mdash;
           <time class="event__end-time" datetime="${datetime}T${eventEnd}">${eventEnd}</time>
         </p>
-        <p class="event__duration">30M</p>
+        <p class="event__duration">${getTimeInterval(dateFrom, dateTo)}</p>
       </div>
       <p class="event__price">
         &euro;&nbsp;<span class="event__price-value">${basePrice}</span>

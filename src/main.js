@@ -1,4 +1,4 @@
-import PointsModel from './model/point-model.js';
+import PointsModel from './model/points-model.js';
 import FilterView from './view/filter-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import { render } from './framework/render.js';

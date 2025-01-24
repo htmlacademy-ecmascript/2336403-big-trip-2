@@ -21,7 +21,7 @@ export default class BoardPresenter {
 
   init () {
     this.boardContainer.innerHTML = '';
-    this.boardPoints = [...this.pointsModel.getPoints()];
+    this.boardPoints = [...this.pointsModel.points];
     render(this.#boardComponent, this.boardContainer);
     render(new SortView(), this.#boardComponent.element);
     render(this.#eventListComponent, this.#boardComponent.element);

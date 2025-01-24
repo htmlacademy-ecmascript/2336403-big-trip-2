@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { humanizePointDate, formatString } from '../utils.js';
 import { FormatDate,POINTS_TYPES } from '../const.js';
 import { getDestKeyValueById, getDestNameList } from '../mock/destinations.js';
@@ -177,23 +177,13 @@ function createEventEditTemplate(event) {
   );
 }
 
-export default class EventEditView {
+export default class EventEditView extends AbstractView {
   constructor (event) {
+    super();
     this.event = event;
   }
 
-  getTemplate() {
+  get template() {
     return createEventEditTemplate(this.event);
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }

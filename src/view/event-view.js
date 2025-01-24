@@ -1,5 +1,4 @@
-
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { humanizePointDate, getTimeInterval } from '../utils.js';
 import { FormatDate } from '../const.js';
 import { getDestKeyValueById } from '../mock/destinations.js';
@@ -58,23 +57,13 @@ function createEventTemplate(event) {
   );
 }
 
-export default class EventView {
+export default class EventView extends AbstractView {
   constructor (event) {
+    super();
     this.event = event;
   }
 
-  getTemplate() {
+  get template() {
     return createEventTemplate(this.event);
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }

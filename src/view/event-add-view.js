@@ -178,7 +178,7 @@ function createEventEditTemplate(event) {
 }
 
 export default class EventEditView extends AbstractView {
-  constructor (event) {
+    constructor (event) {
     super();
     this.event = event;
   }

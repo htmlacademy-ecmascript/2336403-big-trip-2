@@ -10,31 +10,48 @@ import { getDefaultPoint } from '../const.js';
 
 
 export default class BoardPresenter {
+  #boardContainer = null;
+  #boardPoints = null;
+  #pointsModel = null;
+
   #boardComponent = new BoardView();
   #eventListComponent = new EventListView();
   #eventItem = new EventItemView();
 
   constructor({boardContainer, pointsModel}) {
-    this.boardContainer = boardContainer;
-    this.pointsModel = pointsModel;
+    this.#boardContainer = boardContainer;
+    this.#pointsModel = pointsModel;
   }
 
   init () {
-    this.boardContainer.innerHTML = '';
-    this.boardPoints = [...this.pointsModel.points];
-    render(this.#boardComponent, this.boardContainer);
+    this.#boardContainer.innerHTML = '';
+    this.#boardPoints = [...this.#pointsModel.points];
+    render(this.#boardComponent, this.#boardContainer);
     render(new SortView(), this.#boardComponent.element);
     render(this.#eventListComponent, this.#boardComponent.element);
     render(this.#eventItem, this.#eventListComponent.element);
-    render(this.#eventItem, this.#eventListComponent.element);
-    render(new EventAddView(getDefaultPoint()), this.#eventItem.element);
 
-    for (let i = 0; i < this.boardPoints.length; i++) {
-      render(this.#eventItem, this.#eventListComponent.element);
-      render (new EventView(this.boardPoints[i]), this.#eventItem.element);
+    this.#renderAddEventPoint(getDefaultPoint());
+    for (let i = 0; i < this.#boardPoints.length; i++) {
+      this.#renderEventPoint(this.#boardPoints[i]);
     }
+    this.#renderEditEventPoint(this.#boardPoints[0]);
+  }
 
+  #renderEventPoint(point) {
+    render (this.#eventItem, this.#eventListComponent.element);
+    render (new EventView(point), this.#eventItem.element);
+  }
+
+  #renderAddEventPoint(point) {
     render(this.#eventItem, this.#eventListComponent.element);
-    render(new EventEditView(this.boardPoints[0]), this.#eventItem.element);
+    render(new EventAddView(point), this.#eventItem.element);
+  }
+
+  #renderEditEventPoint(point) {
+    render(this.#eventItem, this.#eventListComponent.element);
+    render(new EventEditView(point), this.#eventItem.element);
   }
 }
+
+

@@ -31,27 +31,39 @@ export default class BoardPresenter {
     render(this.#eventListComponent, this.#boardComponent.element);
     render(this.#eventItem, this.#eventListComponent.element);
 
-    this.#renderAddEventPoint(getDefaultPoint());
+    this.#renderEditEventPoint(this.#boardPoints[0]);
     for (let i = 0; i < this.#boardPoints.length; i++) {
       this.#renderEventPoint(this.#boardPoints[i]);
     }
-    this.#renderEditEventPoint(this.#boardPoints[0]);
   }
 
   #renderEventPoint(point) {
-    render (this.#eventItem, this.#eventListComponent.element);
-    render (new EventView(point), this.#eventItem.element);
-  }
+    const eventView = new EventView ({
+      event: point,
+      onEditClick: () => {
+        window.console.log('test');
+      },
+    });
 
-  #renderAddEventPoint(point) {
-    render(this.#eventItem, this.#eventListComponent.element);
-    render(new EventAddView(point), this.#eventItem.element);
+    render (this.#eventItem, this.#eventListComponent.element);
+    render (eventView, this.#eventItem.element);
   }
 
   #renderEditEventPoint(point) {
+    const eventEditView = new EventEditView ({
+      event: point,
+      onFormSubmit: () => {
+        window.console.log('test');
+      },
+    });
     render(this.#eventItem, this.#eventListComponent.element);
-    render(new EventEditView(point), this.#eventItem.element);
+    render(eventEditView, this.#eventItem.element);
   }
+
+  // #renderAddEventPoint(point) {
+  //   render(this.#eventItem, this.#eventListComponent.element);
+  //   render(new EventEditView(point), this.#eventItem.element);
+  // }
 }
 
 

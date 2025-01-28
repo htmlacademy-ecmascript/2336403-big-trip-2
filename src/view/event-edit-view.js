@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { humanizePointDate, formatString } from '../utils.js';
 import { FormatDate, POINTS_TYPES } from '../const.js';
 import { getDestKeyValueById, getDestNameList } from '../mock/destinations.js';
@@ -181,23 +181,30 @@ function createEventEditTemplate(event) {
   );
 }
 
-export default class EventEditView {
-  constructor (event) {
+export default class EventEditView extends AbstractView {
+  #handleFormSubmit = null;
+  #handleFormClick = null;
+
+  constructor ({event, onFormSubmit, onFormClick}) {
+    super();
     this.event = event;
+    this.#handleFormSubmit = onFormSubmit;
+    this.#handleFormClick = onFormClick;
+    this.element.addEventListener('submit', this.#formSubmitHandler);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formCloseHandler);
   }
 
-  getTemplate() {
+  get template() {
     return createEventEditTemplate(this.event);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFormSubmit();
+  };
 
-  removeElement() {
-    this.element = null;
-  }
+  #formCloseHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFormClick();
+  };
 }

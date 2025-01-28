@@ -1,6 +1,5 @@
-
-import { createElement } from '../render.js';
-import { humanizePointDate } from '../utils.js';
+import AbstractView from '../framework/view/abstract-view.js';
+import { humanizePointDate, getTimeInterval } from '../utils.js';
 import { FormatDate } from '../const.js';
 import { getDestKeyValueById } from '../mock/destinations.js';
 
@@ -36,7 +35,7 @@ function createEventTemplate(event) {
           &mdash;
           <time class="event__end-time" datetime="${datetime}T${eventEnd}">${eventEnd}</time>
         </p>
-        <p class="event__duration">30M</p>
+        <p class="event__duration">${getTimeInterval(dateFrom, dateTo)}</p>
       </div>
       <p class="event__price">
         &euro;&nbsp;<span class="event__price-value">${basePrice}</span>
@@ -58,23 +57,22 @@ function createEventTemplate(event) {
   );
 }
 
-export default class EventView {
-  constructor (event) {
+export default class EventView extends AbstractView {
+  #handleEditClick = null;
+
+  constructor ({event, onEditClick}) {
+    super();
     this.event = event;
+    this.#handleEditClick = onEditClick;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHadler);
   }
 
-  getTemplate() {
+  get template() {
     return createEventTemplate(this.event);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
-  }
+  #editClickHadler = (evt) => {
+    evt.preventDefault();
+    this.#handleEditClick();
+  };
 }

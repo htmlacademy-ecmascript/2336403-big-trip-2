@@ -51,7 +51,6 @@ export default class BoardPresenter {
       onEditClick: () => {
         replaceEventToForm();
         document.addEventListener('keydown', escKeyDownHandler);
-        window.console.log('eventView');
       },
     });
 
@@ -60,7 +59,10 @@ export default class BoardPresenter {
       onFormSubmit: () => {
         replaceFormToEvent();
         document.removeEventListener('keydown', escKeyDownHandler);
-        window.console.log('eventEditView');
+      },
+      onFormClick: () => {
+        replaceFormToEvent();
+        document.removeEventListener('keydown', escKeyDownHandler);
       },
     });
 

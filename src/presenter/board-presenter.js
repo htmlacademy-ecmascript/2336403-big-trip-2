@@ -1,12 +1,12 @@
-import { render } from '../framework/render.js';
+import { render, replace } from '../framework/render.js';
 import EventListView from '../view/event-list-view.js';
 import EventEditView from '../view/event-edit-view.js';
-import EventAddView from '../view/event-add-view.js';
+//import EventAddView from '../view/event-add-view.js';
 import EventItemView from '../view/event-item-view.js';
 import EventView from '../view/event-view.js';
 import BoardView from '../view/board-view.js';
 import SortView from '../view/sort-view.js';
-import { getDefaultPoint } from '../const.js';
+//import { getDefaultPoint } from '../const.js';
 
 
 export default class BoardPresenter {
@@ -31,39 +31,48 @@ export default class BoardPresenter {
     render(this.#eventListComponent, this.#boardComponent.element);
     render(this.#eventItem, this.#eventListComponent.element);
 
-    this.#renderEditEventPoint(this.#boardPoints[0]);
     for (let i = 0; i < this.#boardPoints.length; i++) {
-      this.#renderEventPoint(this.#boardPoints[i]);
+      this.#renderEventComponent(this.#boardPoints[i]);
     }
   }
 
-  #renderEventPoint(point) {
+  #renderEventComponent(point) {
+
+    const escKeyDownHandler = (evt) => {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        replaceFormToEvent();
+        document.removeEventListener('keydown', escKeyDownHandler);
+      }
+    };
+
     const eventView = new EventView ({
       event: point,
       onEditClick: () => {
-        window.console.log('test');
+        replaceEventToForm();
+        document.addEventListener('keydown', escKeyDownHandler);
+        window.console.log('eventView');
       },
     });
 
-    render (this.#eventItem, this.#eventListComponent.element);
-    render (eventView, this.#eventItem.element);
-  }
-
-  #renderEditEventPoint(point) {
     const eventEditView = new EventEditView ({
       event: point,
       onFormSubmit: () => {
-        window.console.log('test');
+        replaceFormToEvent();
+        document.removeEventListener('keydown', escKeyDownHandler);
+        window.console.log('eventEditView');
       },
     });
+
+    function replaceEventToForm() {
+      replace(eventEditView, eventView);
+    }
+
+    function replaceFormToEvent() {
+      replace(eventView, eventEditView);
+    }
+
     render(this.#eventItem, this.#eventListComponent.element);
-    render(eventEditView, this.#eventItem.element);
+    render(eventView, this.#eventItem.element);
   }
-
-  // #renderAddEventPoint(point) {
-  //   render(this.#eventItem, this.#eventListComponent.element);
-  //   render(new EventEditView(point), this.#eventItem.element);
-  // }
 }
-
-

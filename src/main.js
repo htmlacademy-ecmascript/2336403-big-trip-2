@@ -1,10 +1,13 @@
 import PointsModel from './model/points-model.js';
 import FilterView from './view/filter-view.js';
+import TripInfoView from './view/trip-info-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
+import { FilterType } from './utils/filter.js';
 import { render } from './framework/render.js';
 
 
 const pageHeaderElement = document.querySelector('.page-header');
+const tripMainElement = pageHeaderElement.querySelector('.trip-main');
 const filtersElement = pageHeaderElement.querySelector('.trip-controls__filters');
 const pageMainElement = document.querySelector('.page-main');
 const pageBodyContainerElement = pageMainElement.querySelector('.page-body__container');
@@ -18,4 +21,6 @@ const boardPresenter = new BoardPresenter({
   pointsModel});
 
 render(new FilterView, filtersElement);
+render(new TripInfoView, tripMainElement, 'afterbegin');
+
 boardPresenter.init();

@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { humanizePointDate, formatString } from '../utils.js';
-import { FormatDate, POINTS_TYPES } from '../const.js';
+import { humanizePointDate, formatString } from '../utils/utils.js';
+import { FormatDate, POINTS_TYPES } from '../utils/const.js';
 import { getDestKeyValueById, getDestNameList } from '../mock/destinations.js';
 import { getOffersByType } from '../mock/offers.js';
 

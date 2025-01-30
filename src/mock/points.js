@@ -1,5 +1,5 @@
-import { getRandomArrayEl, getRandomRange, getRandomDate } from '../utils.js';
-import { POINTS_TYPES } from '../const.js';
+import { getRandomArrayEl, getRandomRange, getRandomDate } from '../utils/utils.js';
+import { POINTS_TYPES } from '../utils/const.js';
 import { getOffersByType } from './offers.js';
 
 

@@ -28,4 +28,11 @@ const getDefaultPoint = () => ({
   type: POINTS_TYPES[0],
 });
 
-export { POINTS_TYPES, FormatDate, getDefaultPoint };
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past',
+};
+
+export { POINTS_TYPES, FormatDate, getDefaultPoint, FilterType };

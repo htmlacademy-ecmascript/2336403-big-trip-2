@@ -9,14 +9,5 @@ const filter = {
   [FilterType.PAST]: (points) => points.filter((point) => humanizePointDate(point.dateFrom) < today),
 };
 
-function sortPointByFilter(points) {
-  return Object.entries(filter).map(
-    ([filterType, filterPoints]) => ({
-      type: filterType,
-      count: filterPoints(points).length,
-    }),
-  );
-}
 
-
-export { filter, sortPointByFilter };
+export { filter };

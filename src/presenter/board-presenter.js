@@ -30,15 +30,11 @@ export default class BoardPresenter {
     if (this.#boardPoints.length !== 0) {
       render (new SortView(), this.#boardComponent.element);
       render(this.#eventListComponent, this.#boardComponent.element);
-      //render(this.#eventItem, this.#eventListComponent.element);
       for (let i = 0; i < this.#boardPoints.length; i++) {
         this.#renderEventComponent(this.#boardPoints[i]);
       }
     } else {
-      //render(this.#eventListComponent, this.#boardComponent.element);
-      //render(this.#eventItem, this.#eventListComponent.element);
       render(new EventEmptyView(), this.#boardComponent.element);
-      //window.console.log('Пусто');
     }
   }
 

@@ -2,6 +2,7 @@ import PointsModel from './model/points-model.js';
 import FilterView from './view/filter-view.js';
 import TripInfoView from './view/trip-info-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
+import { getTripInfo } from './mock/get-trip-info.js';
 import { generateFilter } from './mock/generate-filter.js';
 import { render } from './framework/render.js';
 
@@ -17,12 +18,13 @@ const pointsModel = new PointsModel();
 pointsModel.init();
 
 const filters = generateFilter(pointsModel.points);
+const tripInfo = getTripInfo(pointsModel.points);
 
 const boardPresenter = new BoardPresenter({
   boardContainer: pageBodyContainerElement,
   pointsModel});
 
 render(new FilterView({filters}), filtersElement);
-render(new TripInfoView, tripMainElement, 'afterbegin');
+render(new TripInfoView({tripInfo}), tripMainElement, 'afterbegin');
 
 boardPresenter.init();

@@ -1,5 +1,5 @@
 import { FilterType } from './const.js';
-import { humanizePointDate } from './utils.js';
+import { humanizePointDate } from './date-utils.js';
 const today = humanizePointDate(new Date());
 
 const filter = {

@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { humanizePointDate, getTimeInterval } from '../utils/utils.js';
+import { humanizePointDate, getTimeInterval } from '../utils/date-utils.js';
 import { FormatDate } from '../utils/const.js';
 import { getDestKeyValueById } from '../mock/destinations.js';
 

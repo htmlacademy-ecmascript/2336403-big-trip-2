@@ -18,13 +18,13 @@ const pointsModel = new PointsModel();
 pointsModel.init();
 
 const filters = generateFilter(pointsModel.points);
-const tripInfo = getTripInfo(pointsModel.points);
+//const tripInfo = getTripInfo(pointsModel.points);
 
 const boardPresenter = new BoardPresenter({
   boardContainer: pageBodyContainerElement,
   pointsModel});
 
 render(new FilterView({filters}), filtersElement);
-render(new TripInfoView({tripInfo}), tripMainElement, 'afterbegin');
+render(new TripInfoView(pointsModel.points), tripMainElement, 'afterbegin');
 
 boardPresenter.init();

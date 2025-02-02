@@ -1,3 +1,5 @@
+const MAX_WAYPOINTS_IN_TITLE = 3; //Максимальное количество пунктов путешествия без сокращения в заголовке
+
 const POINTS_TYPES = [
   'taxi', //0
   'bus', //1
@@ -35,4 +37,4 @@ const FilterType = {
   PAST: 'past',
 };
 
-export { POINTS_TYPES, FormatDate, getDefaultPoint, FilterType };
+export { POINTS_TYPES, FormatDate, getDefaultPoint, FilterType, MAX_WAYPOINTS_IN_TITLE };

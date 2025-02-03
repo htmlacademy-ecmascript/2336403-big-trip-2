@@ -1,6 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { humanizePointDate, formatString } from '../utils.js';
-import { FormatDate, POINTS_TYPES } from '../const.js';
+import { humanizePointDate } from '../utils/date-utils.js';
+import { formatString } from '../utils/utils.js';
+import { FormatDate, POINTS_TYPES } from '../utils/const.js';
 import { getDestKeyValueById, getDestNameList } from '../mock/destinations.js';
 import { getOffersByType } from '../mock/offers.js';
 
@@ -8,16 +9,16 @@ import { getOffersByType } from '../mock/offers.js';
 function createPointTypeItemTemplate(type, id) {
   return (
     `<div class="event__type-item">
-    <input 
-      id="event-type-${type}-${id}" 
-      class="event__type-input  visually-hidden" 
-      type="radio" 
-      name="event-type" 
+    <input
+      id="event-type-${type}-${id}"
+      class="event__type-input  visually-hidden"
+      type="radio"
+      name="event-type"
       value="${type}"
     >
-    <label 
-      class="event__type-label  
-      event__type-label--${type}" 
+    <label
+      class="event__type-label
+      event__type-label--${type}"
       for="event-type-${type}-${id}">${formatString(type)}
     </label>
   </div>`
@@ -41,20 +42,20 @@ function createGroupTime(dateFrom, dateTo, id) {
     `
     <div class="event__field-group  event__field-group--time">
       <label class="visually-hidden" for="event-start-time-${id}">From</label>
-      <input 
-        class="event__input  event__input--time" 
-        id="event-start-time-${id}" 
-        type="text" 
-        name="event-start-time" 
+      <input
+        class="event__input  event__input--time"
+        id="event-start-time-${id}"
+        type="text"
+        name="event-start-time"
         value="${dateFromSlashed} ${dateFromShedule}"
       >
       &mdash;
       <label class="visually-hidden" for="event-end-time-${id}">To</label>
-      <input 
-        class="event__input  event__input--time" 
-        id="event-end-time-${id}" 
-        type="text" 
-        name="event-end-time" 
+      <input
+        class="event__input  event__input--time"
+        id="event-end-time-${id}"
+        type="text"
+        name="event-end-time"
         value="${dateToSlashed} ${dateToShedule}"
       >
     </div>
@@ -145,7 +146,7 @@ function createEventEditTemplate(event) {
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-${id}" type="checkbox">
           <div class="event__type-list">
             <fieldset class="event__type-group">
-              <legend class="visually-hidden">Event type</legend>        
+              <legend class="visually-hidden">Event type</legend>
                 ${POINTS_TYPES.map((item) => createPointTypeItemTemplate(item, id)).join('')}
             </fieldset>
           </div>

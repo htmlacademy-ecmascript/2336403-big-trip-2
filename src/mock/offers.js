@@ -20,12 +20,12 @@ const mockOffers = [
       {
         id: '00000000-0000-0000-0000-offer0000003',
         title: 'Drive me, driver',
-        price: 12000
+        price: 180
       },
       {
         id: '00000000-0000-0000-0000-offer0000004',
         title: 'Stop here',
-        price: 999999
+        price: 200
       }
     ]
   },
@@ -65,7 +65,7 @@ const mockOffers = [
       {
         id: '00000000-0000-0000-0000-offer0000010',
         title: 'Wake up at a certain time',
-        price: 140
+        price: 160
       }
     ]
   },
@@ -80,7 +80,7 @@ const mockOffers = [
       {
         id: '00000000-0000-0000-0000-offer0000012',
         title: 'Choose seats',
-        price: 140000
+        price: 40
       },
       {
         id: '00000000-0000-0000-0000-offer0000017',

@@ -1,13 +1,14 @@
+import { FormatDate } from './const.js';
+import minMax from 'dayjs/plugin/minMax';
+
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
-const getRandomArrayEl = (elements) => elements[Math.floor(Math.random() * elements.length)];
-const getRandomRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+dayjs.extend(duration);
+dayjs.extend(minMax);
+
 const getRandomDate = (start, end) => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 const humanizePointDate = (date, formatDate) => date ? dayjs(date).format(formatDate) : '';
-const formatString = (string) => string.at(0).toUpperCase() + string.slice(1);
-
-dayjs.extend(duration);
 
 function getTimeInterval(dateFrom, dateTo) {
   const start = dayjs(dateFrom);
@@ -29,4 +30,10 @@ function getTimeInterval(dateFrom, dateTo) {
   }
 }
 
-export { getRandomArrayEl, getRandomRange, getRandomDate, humanizePointDate, formatString, getTimeInterval };
+//Получить дату старта маршрута
+const getStartDate = (items) => humanizePointDate(dayjs.min(items.map((item) => dayjs(item.dateFrom))), FormatDate.DATE_EVENT);
+
+//Получить дату конца маршрута
+const getFinishDate = (items) => humanizePointDate(dayjs.max(items.map((item) => dayjs(item.dateTo))), FormatDate.DATE_EVENT);
+
+export { getRandomDate, humanizePointDate, getTimeInterval, getStartDate, getFinishDate };

@@ -26,7 +26,7 @@ function createTripInfoTemplate(points) {
 function createTitle(points) {
   const distNameList = points.map((item) => getDestKeyValueById(item.destination,'name'));
   if (points.length > MAX_WAYPOINTS_IN_TITLE) {
-    return `${getDestKeyValueById(points.at(0).destination, 'name')} &mdash;...&mdash; ${getDestKeyValueById(points.at(-1).destination, 'name')}`;
+    return `${getDestKeyValueById(points.at(0).destination, 'name')} &mdash;  ...  &mdash; ${getDestKeyValueById(points.at(-1).destination, 'name')}`;
   }
   return distNameList.join(' &mdash; ');
 }

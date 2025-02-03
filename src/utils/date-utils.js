@@ -1,9 +1,11 @@
 import { FormatDate } from './const.js';
+import minMax from 'dayjs/plugin/minMax';
 
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(duration);
+dayjs.extend(minMax);
 
 const getRandomDate = (start, end) => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 const humanizePointDate = (date, formatDate) => date ? dayjs(date).format(formatDate) : '';

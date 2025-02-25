@@ -18,6 +18,8 @@ export default class BoardPresenter {
   #boardSortComponent = new SortView(); //Переменная для хранения отображения сортировки;
   #eventEmpmtyComponent = new EventEmptyView(); //Переменная для хранения отображения сообщения пустого списка точек маршрута;
 
+  #eventPresentersList = new Map(); //Создает пустую коллекцию презенторов событий маршрута
+
   constructor({boardContainer, pointsModel}) {
     this.#boardContainer = boardContainer;
     this.#pointsModel = pointsModel;
@@ -48,8 +50,16 @@ export default class BoardPresenter {
     render(this.#eventEmpmtyComponent, this.#boardComponent.element);
   }
 
+  //Отрисовывает событие маршрута
   #renderEventComponent(point) {
     const eventViewPresenter = new EventViewPresenter({boardContainer: this.#boardComponent.element});
     eventViewPresenter.init(point);
+
+    this.#eventPresentersList.set(point.id, eventViewPresenter);
+  }
+
+  #clearEventPresenter() {
+    this.#eventPresentersList.forEach((presenter) => presenter.destroy());
+    this.#eventPresentersList.clear();
   }
 }

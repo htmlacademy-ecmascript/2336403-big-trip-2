@@ -1,4 +1,4 @@
-import { render, replace } from '../framework/render.js';
+import { render, replace, remove } from '../framework/render.js';
 import EventEditView from '../view/event-edit-view.js';
 import EventView from '../view/event-view.js';
 
@@ -15,6 +15,9 @@ export default class EventViewPresenter {
 
   init(point) {
     this.#point = point;
+
+    const prevEventView = this.#eventView;
+    const prevEventEditView = this.#eventEditView;
 
     this.#eventView = new EventView ({
       event: point,
@@ -36,7 +39,26 @@ export default class EventViewPresenter {
       },
     });
 
-    render(this.#eventView, this.#boardContainer);
+    if (prevEventView === null || prevEventEditView === null) {
+      render(this.#eventView, this.#boardContainer);
+      return;
+    }
+
+    if (this.#boardContainer.contains(prevEventView.element)) {
+      replace(this.#eventView, prevEventView);
+    }
+
+    if (this.#boardContainer.contains(prevEventEditView.element)) {
+      replace(this.#eventView, prevEventEditView);
+    }
+
+    remove(prevEventView);
+    remove(prevEventEditView);
+  }
+
+  destroy() {
+    remove(this.#eventView);
+    remove(this.#eventEditView);
   }
 
   #replaceEventToForm() {

@@ -2,17 +2,24 @@ import { render, replace, remove } from '../framework/render.js';
 import EventEditView from '../view/event-edit-view.js';
 import EventView from '../view/event-view.js';
 
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
 export default class EventViewPresenter {
   #boardContainer = null;
-
   #eventView = null;
   #eventEditView = null;
   #handleDataChange = null;
+  #handleModeChange = null;
   #point = null;
+  #mode = Mode.DEFAULT;
 
-  constructor({boardContainer, onDataChange}) {
+
+  constructor({boardContainer, onDataChange, onModeChange}) {
     this.#boardContainer = boardContainer;
     this.#handleDataChange = onDataChange;
+    this.#handleModeChange = onModeChange;
   }
 
   init(point) {
@@ -20,8 +27,6 @@ export default class EventViewPresenter {
 
     const prevEventView = this.#eventView;
     const prevEventEditView = this.#eventEditView;
-
-    //window.console.log(point);
 
     this.#eventView = new EventView ({
       event: point,
@@ -42,7 +47,6 @@ export default class EventViewPresenter {
         this.#replaceFormToEvent();
         document.removeEventListener('keydown', this.#escKeyDownHandler);
       },
-      //onFavoriteClick: this.#handleFavoriteClick, ??
     });
 
     if (prevEventView === null || prevEventEditView === null) {
@@ -50,12 +54,12 @@ export default class EventViewPresenter {
       return;
     }
 
-    if (this.#boardContainer.contains(prevEventView.element)) {
+    if (this.#mode === Mode.DEFAULT) {
       replace(this.#eventView, prevEventView);
     }
 
-    if (this.#boardContainer.contains(prevEventEditView.element)) {
-      replace(this.#eventView, prevEventEditView);
+    if (this.#mode === Mode.EDITING) {
+      replace(this.#eventEditView, prevEventEditView);
     }
 
     remove(prevEventView);
@@ -67,12 +71,21 @@ export default class EventViewPresenter {
     remove(this.#eventEditView);
   }
 
+  resetView() {
+    if (this.#mode !== Mode.DEFAULT) {
+      this.#replaceFormToEvent();
+    }
+  }
+
   #replaceEventToForm() {
     replace(this.#eventEditView, this.#eventView);
+    this.#handleModeChange();
+    this.#mode = Mode.EDITING;
   }
 
   #replaceFormToEvent() {
     replace(this.#eventView, this.#eventEditView);
+    this.#mode = Mode.DEFAULT;
   }
 
   #escKeyDownHandler = (evt) => {

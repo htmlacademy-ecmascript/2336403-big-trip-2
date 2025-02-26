@@ -1,7 +1,6 @@
 import { render } from '../framework/render.js';
 import EventListView from '../view/event-list-view.js';
 import EventViewPresenter from './event-view-presenter.js';
-//import EventItemView from '../view/event-item-view.js';
 import BoardView from '../view/board-view.js';
 import EventEmptyView from '../view/event-empty-view.js';
 import SortView from '../view/sort-view.js';
@@ -14,7 +13,6 @@ export default class BoardPresenter {
 
   #boardComponent = new BoardView();
   #eventListComponent = new EventListView();
-  //#eventItem = new EventItemView();
 
   #boardSortComponent = new SortView(); //Переменная для хранения отображения сортировки;
   #eventEmpmtyComponent = new EventEmptyView(); //Переменная для хранения отображения сообщения пустого списка точек маршрута;
@@ -44,9 +42,13 @@ export default class BoardPresenter {
   //Обработчик изменения события маршрута
   #handleEventChange = (updatedBoardPoint) => {
     this.#boardPoints = updateItem(this.#boardPoints, updatedBoardPoint);
-    window.console.log('updateBoardPoint', updatedBoardPoint);
     this.#eventPresentersList.get(updatedBoardPoint.id).init(updatedBoardPoint);
   };
+
+  #handleModeChange = () => {
+    this.#eventPresentersList.forEach((presenter) => presenter.resetView());
+  };
+
 
   //Отрисовывает отображение сортировки
   #renderSort() {
@@ -63,12 +65,12 @@ export default class BoardPresenter {
     const eventViewPresenter = new EventViewPresenter({
       boardContainer: this.#boardComponent.element,
       onDataChange: this.#handleEventChange,
+      onModeChange: this.#handleModeChange,
     });
     eventViewPresenter.init(point);
 
     this.#eventPresentersList.set(point.id, eventViewPresenter);
   }
-
 
   #clearEventPresentersList() {
     this.#eventPresentersList.forEach((presenter) => presenter.destroy());

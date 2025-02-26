@@ -1,10 +1,11 @@
 import { render } from '../framework/render.js';
 import EventListView from '../view/event-list-view.js';
 import EventViewPresenter from './event-view-presenter.js';
-import EventItemView from '../view/event-item-view.js';
+//import EventItemView from '../view/event-item-view.js';
 import BoardView from '../view/board-view.js';
 import EventEmptyView from '../view/event-empty-view.js';
 import SortView from '../view/sort-view.js';
+import { updateItem } from '../utils/utils.js';
 
 export default class BoardPresenter {
   #boardContainer = null;
@@ -13,7 +14,7 @@ export default class BoardPresenter {
 
   #boardComponent = new BoardView();
   #eventListComponent = new EventListView();
-  #eventItem = new EventItemView();
+  //#eventItem = new EventItemView();
 
   #boardSortComponent = new SortView(); //Переменная для хранения отображения сортировки;
   #eventEmpmtyComponent = new EventEmptyView(); //Переменная для хранения отображения сообщения пустого списка точек маршрута;
@@ -40,6 +41,13 @@ export default class BoardPresenter {
     }
   }
 
+  //Обработчик изменения события маршрута
+  #handleEventChange = (updatedBoardPoint) => {
+    this.#boardPoints = updateItem(this.#boardPoints, updatedBoardPoint);
+    window.console.log('updateBoardPoint', updatedBoardPoint);
+    this.#eventPresentersList.get(updatedBoardPoint.id).init(updatedBoardPoint);
+  };
+
   //Отрисовывает отображение сортировки
   #renderSort() {
     render(this.#boardSortComponent, this.#boardComponent.element);
@@ -52,13 +60,17 @@ export default class BoardPresenter {
 
   //Отрисовывает событие маршрута
   #renderEventComponent(point) {
-    const eventViewPresenter = new EventViewPresenter({boardContainer: this.#boardComponent.element});
+    const eventViewPresenter = new EventViewPresenter({
+      boardContainer: this.#boardComponent.element,
+      onDataChange: this.#handleEventChange,
+    });
     eventViewPresenter.init(point);
 
     this.#eventPresentersList.set(point.id, eventViewPresenter);
   }
 
-  #clearEventPresenter() {
+
+  #clearEventPresentersList() {
     this.#eventPresentersList.forEach((presenter) => presenter.destroy());
     this.#eventPresentersList.clear();
   }

@@ -7,10 +7,12 @@ export default class EventViewPresenter {
 
   #eventView = null;
   #eventEditView = null;
+  #handleDataChange = null;
   #point = null;
 
-  constructor({boardContainer}) {
+  constructor({boardContainer, onDataChange}) {
     this.#boardContainer = boardContainer;
+    this.#handleDataChange = onDataChange;
   }
 
   init(point) {
@@ -19,12 +21,15 @@ export default class EventViewPresenter {
     const prevEventView = this.#eventView;
     const prevEventEditView = this.#eventEditView;
 
+    //window.console.log(point);
+
     this.#eventView = new EventView ({
       event: point,
       onEditClick: () => {
         this.#replaceEventToForm();
         document.addEventListener('keydown', this.#escKeyDownHandler);
       },
+      onFavoriteClick: this.#handleFavoriteClick,
     });
 
     this.#eventEditView = new EventEditView ({
@@ -37,6 +42,7 @@ export default class EventViewPresenter {
         this.#replaceFormToEvent();
         document.removeEventListener('keydown', this.#escKeyDownHandler);
       },
+      //onFavoriteClick: this.#handleFavoriteClick, ??
     });
 
     if (prevEventView === null || prevEventEditView === null) {
@@ -75,5 +81,9 @@ export default class EventViewPresenter {
       this.#replaceFormToEvent();
       document.removeEventListener('keydown', this.#escKeyDownHandler);
     }
+  };
+
+  #handleFavoriteClick = () => {
+    this.#handleDataChange({...this.#point, isFavorite: !this.#point.isFavorite});
   };
 }

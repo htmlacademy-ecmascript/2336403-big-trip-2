@@ -1,14 +1,10 @@
-import { render, replace } from '../framework/render.js';
+import { render } from '../framework/render.js';
 import EventListView from '../view/event-list-view.js';
-import EventEditView from '../view/event-edit-view.js';
-//import EventAddView from '../view/event-add-view.js';
-import EventItemView from '../view/event-item-view.js';
-import EventView from '../view/event-view.js';
+import EventViewPresenter from './event-view-presenter.js';
 import BoardView from '../view/board-view.js';
 import EventEmptyView from '../view/event-empty-view.js';
 import SortView from '../view/sort-view.js';
-//import { getDefaultPoint } from '../const.js';
-
+import { updateItem } from '../utils/utils.js';
 
 export default class BoardPresenter {
   #boardContainer = null;
@@ -17,7 +13,12 @@ export default class BoardPresenter {
 
   #boardComponent = new BoardView();
   #eventListComponent = new EventListView();
-  #eventItem = new EventItemView();
+
+  #boardSortComponent = new SortView(); //Переменная для хранения отображения сортировки;
+  #eventEmpmtyComponent = new EventEmptyView(); //Переменная для хранения отображения сообщения пустого списка точек маршрута;
+
+  #eventPresentersList = new Map(); //Создает пустую коллекцию презенторов событий маршрута
+
   constructor({boardContainer, pointsModel}) {
     this.#boardContainer = boardContainer;
     this.#pointsModel = pointsModel;
@@ -28,55 +29,51 @@ export default class BoardPresenter {
     this.#boardPoints = [...this.#pointsModel.points];
     render(this.#boardComponent, this.#boardContainer);
     if (this.#boardPoints.length !== 0) {
-      render (new SortView(), this.#boardComponent.element);
+      this.#renderSort();
       render(this.#eventListComponent, this.#boardComponent.element);
       for (let i = 0; i < this.#boardPoints.length; i++) {
         this.#renderEventComponent(this.#boardPoints[i]);
       }
     } else {
-      render(new EventEmptyView(), this.#boardComponent.element);
+      this.#renderEmptyView();
     }
   }
 
+  //Обработчик изменения события маршрута
+  #handleEventChange = (updatedBoardPoint) => {
+    this.#boardPoints = updateItem(this.#boardPoints, updatedBoardPoint);
+    this.#eventPresentersList.get(updatedBoardPoint.id).init(updatedBoardPoint);
+  };
+
+  #handleModeChange = () => {
+    this.#eventPresentersList.forEach((presenter) => presenter.resetView());
+  };
+
+
+  //Отрисовывает отображение сортировки
+  #renderSort() {
+    render(this.#boardSortComponent, this.#boardComponent.element);
+  }
+
+  //Отрисовывает отображение пустого списка точек маршрута
+  #renderEmptyView() {
+    render(this.#eventEmpmtyComponent, this.#boardComponent.element);
+  }
+
+  //Отрисовывает событие маршрута
   #renderEventComponent(point) {
-
-    const escKeyDownHandler = (evt) => {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        replaceFormToEvent();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    };
-
-    const eventView = new EventView ({
-      event: point,
-      onEditClick: () => {
-        replaceEventToForm();
-        document.addEventListener('keydown', escKeyDownHandler);
-      },
+    const eventViewPresenter = new EventViewPresenter({
+      boardContainer: this.#boardComponent.element,
+      onDataChange: this.#handleEventChange,
+      onModeChange: this.#handleModeChange,
     });
+    eventViewPresenter.init(point);
 
-    const eventEditView = new EventEditView ({
-      event: point,
-      onFormSubmit: () => {
-        replaceFormToEvent();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      },
-      onFormClick: () => {
-        replaceFormToEvent();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      },
-    });
+    this.#eventPresentersList.set(point.id, eventViewPresenter);
+  }
 
-    function replaceEventToForm() {
-      replace(eventEditView, eventView);
-    }
-
-    function replaceFormToEvent() {
-      replace(eventView, eventEditView);
-    }
-
-    render(this.#eventItem, this.#eventListComponent.element);
-    render(eventView, this.#eventItem.element);
+  #clearEventPresentersList() {
+    this.#eventPresentersList.forEach((presenter) => presenter.destroy());
+    this.#eventPresentersList.clear();
   }
 }
